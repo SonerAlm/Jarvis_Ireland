@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Jarvis – Create New Shop (Ireland)</title>
+    <link rel="icon" type="image/png" href="https://jarvis-v2.core-retail.com/img/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .navbar-laravel {
+            background-color: #41197f;
+        }
+        .navbar-brand img { height: 38px; }
+
+        h1 { font-size: 1.6rem; font-weight: 700; color: #333; }
+
+        .card {
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+        }
+
+        .btn-primary {
+            background-color: #7b84ff;
+            border-color: #7b84ff;
+        }
+        .btn-primary:hover {
+            background-color: #6770ee;
+            border-color: #6770ee;
+        }
+        .btn-danger { background-color: #dc3545; border-color: #dc3545; }
+
+        .form-control { border-color: #dde0f5; }
+        .form-control:focus { border-color: #7b84ff; box-shadow: 0 0 0 0.2rem rgba(123,132,255,.25); }
+
+        .contact-form-block {
+            background: #f3f4fd;
+            border: 1px solid #bfc4ff;
+            border-radius: 6px;
+            padding: 14px;
+            margin-bottom: 10px;
+        }
+
+        .checkbox-list {
+            border: 1px solid #dde0f5;
+            border-radius: 6px;
+            padding: 8px 12px;
+            max-height: 220px;
+            overflow-y: auto;
+            background: #fff;
+        }
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 4px 0;
+            font-weight: 400;
+            font-size: 14px;
+            cursor: pointer;
+            color: #333;
+        }
+        .checkbox-item input[type="checkbox"] {
+            width: 15px;
+            height: 15px;
+            cursor: pointer;
+            accent-color: #7b84ff;
+            flex-shrink: 0;
+        }
+
+        .section-label {
+            font-weight: 700;
+            color: #41197f;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .required-mark { color: #dc3545; }
+
+        .hidden { display: none !important; }
+
+        .back-btn {
+            border: 1px solid #ccc;
+            background: #fff;
+            color: #555;
+            border-radius: 4px;
+            padding: 4px 14px;
+            font-size: 0.9rem;
+            text-decoration: none;
+        }
+        .back-btn:hover { background: #f0f0f0; color: #333; text-decoration: none; }
+
+        .page-header { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark navbar-laravel mb-4">
+    <div class="container">
+        <a href="#" class="navbar-brand">
+            <img src="https://jarvis-v2.core-retail.com/img/favicon.png" alt="Jarvis">
+            <span style="font-size:1.1rem;font-weight:700;margin-left:8px;">Jarvis</span>
+        </a>
+    </div>
+</nav>
+
+<div class="container" style="max-width: 960px;">
+    <div class="page-header">
+        <a href="#" class="back-btn">&lt; Back</a>
+        <h1 class="d-inline-block mb-0">Create New Shop <span style="font-size:0.85rem;color:#7b84ff;font-weight:600;">(Ireland)</span></h1>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <form id="createShopForm" action="#" method="post" novalidate>
+
+                <!-- Shop Name -->
+                <div class="form-group">
+                    <input type="text" name="shop_name" id="shop_name" placeholder="Shop Name *" class="form-control" required>
+                </div>
+
+                <!-- ── ADDRESS ── -->
+                <div class="form-group">
+                    <span class="section-label">Address</span>
+
+                    <input type="text" id="business_name" name="business_name"
+                           placeholder="Business Name *" class="form-control mb-2" required>
+
+                    <input type="text" id="street_address" name="street_address"
+                           placeholder="House Number and Street Name *" class="form-control mb-2" required>
+
+                    <input type="text" id="town_city" name="town_city"
+                           placeholder="Town or City *" class="form-control mb-2" required>
+
+                    <input type="text" id="county" name="county"
+                           placeholder="County *" class="form-control mb-2" required>
+
+                    <input type="text" id="eircode" name="eircode"
+                           placeholder="Eircode *" class="form-control mb-2" required
+                           style="text-transform:uppercase;">
+
+                    <input type="text" id="country" name="country"
+                           placeholder="Country *" value="Ireland" class="form-control" required>
+                </div>
+
+                <!-- Copy Delivery Address button -->
+                <button type="button" onclick="copyDeliveryToShop()" class="btn btn-sm btn-primary mb-3">
+                    Copy Delivery Address
+                </button>
+
+                <!-- ── DELIVERY ADDRESS ── -->
+                <div class="form-group">
+                    <span class="section-label">Delivery Address</span>
+
+                    <input type="text" id="del_business_name" name="del_business_name"
+                           placeholder="Business Name *" class="form-control mb-2" required>
+
+                    <input type="text" id="del_street_address" name="del_street_address"
+                           placeholder="House Number and Street Name *" class="form-control mb-2" required>
+
+                    <input type="text" id="del_town_city" name="del_town_city"
+                           placeholder="Town or City *" class="form-control mb-2" required>
+
+                    <input type="text" id="del_county" name="del_county"
+                           placeholder="County *" class="form-control mb-2" required>
+
+                    <input type="text" id="del_eircode" name="del_eircode"
+                           placeholder="Eircode *" class="form-control mb-2" required
+                           style="text-transform:uppercase;">
+
+                    <input type="text" id="del_country" name="del_country"
+                           placeholder="Country *" value="Ireland" class="form-control" required>
+                </div>
+
+                <!-- ── CONTACTS ── -->
+                <div id="contactsContainer">
+                    <div class="contact-form-block">
+                        <span class="section-label">Contacts</span>
+
+                        <div class="form-group">
+                            <select name="contacts[0][role]" class="form-control">
+                                <option selected disabled>Role</option>
+                                <option value="1">Owner</option>
+                                <option value="2">Manager</option>
+                                <option value="3">Staff</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="contacts[0][contact_first_name]" placeholder="First Name" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="contacts[0][contact_last_name]" placeholder="Last Name" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="contacts[0][phone]" placeholder="Phone" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" name="contacts[0][email]" placeholder="Email" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="mr-2 mb-0" style="font-weight:600;">Marketing</label><br>
+                            <div class="form-check form-check-inline mt-1">
+                                <input class="form-check-input" type="checkbox" name="contacts[0][by_email]" value="1">
+                                <label class="form-check-label">Email</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" name="contacts[0][by_mail]" value="1">
+                                <label class="form-check-label">Mail</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" name="contacts[0][by_phone]" value="1">
+                                <label class="form-check-label">Mobile</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" name="contacts[0][by_sms]" value="1">
+                                <label class="form-check-label">SMS</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="mr-2 mb-0" style="font-weight:600;">Interests</label><br>
+                            <div class="form-check form-check-inline mt-1">
+                                <input class="form-check-input" type="checkbox" name="contacts[0][interest_areas][]" value="10">
+                                <label class="form-check-label">Accessories</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" name="contacts[0][interest_areas][]" value="11">
+                                <label class="form-check-label">SIMs</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" name="contacts[0][interest_areas][]" value="12">
+                                <label class="form-check-label">Vaping</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-0">
+                            <button type="button" id="add-contact-button" class="btn btn-sm btn-primary">Add Contact</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── PAY BY ── -->
+                <div class="form-group mt-3">
+                    <label style="font-weight:600;">Pay by</label>
+                    <select name="pay_method" id="payMethod" class="form-control">
+                        <option value="1">Cheque</option>
+                        <option value="2" selected>Bank Transfer</option>
+                        <option value="9">None</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" name="payee" placeholder="Payee" class="form-control">
+                </div>
+
+                <!-- ── BANK DETAILS (Ireland) ── -->
+                <div id="bankTransferFields">
+                    <span class="section-label">Bank Details</span>
+
+                    <div class="form-group">
+                        <input type="text" name="bic" id="bic" placeholder="SWIFT / BIC *" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="iban" id="iban" placeholder="IBAN *" class="form-control" required
+                               style="text-transform:uppercase;">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="bank_address" id="bank_address" placeholder="Bank Address *" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="bank_sort" id="bank_sort" placeholder="Sort Code *" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="bank_account" id="bank_account" placeholder="Account Number *" class="form-control" required>
+                    </div>
+                </div>
+
+                <!-- VAT ID -->
+                <div class="form-group">
+                    <input type="text" name="vatin" placeholder="VAT ID" class="form-control">
+                </div>
+
+                <!-- ── POTENTIAL ── -->
+                <div class="form-group">
+                    <label style="font-weight:600;">Potential</label>
+                    <select name="potential" class="form-control">
+                        <option value="">-- Select --</option>
+                        <option value="T0 0 conn">T0 0 conn</option>
+                        <option value="T1 1-5 conn">T1 1-5 conn</option>
+                        <option value="T2 6-15 conn">T2 6-15 conn</option>
+                        <option value="T3 16-30 conn">T3 16-30 conn</option>
+                        <option value="T4 31-50 conn">T4 31-50 conn</option>
+                        <option value="T5 51-100 conn">T5 51-100 conn</option>
+                        <option value="T6 100+ conn">T6 100+ conn</option>
+                        <option value="Closed">Closed</option>
+                        <option value="Duplicate">Duplicate</option>
+                        <option value="Super Store">Super Store</option>
+                        <option value="Very Good Store">Very Good Store</option>
+                        <option value="Good Store">Good Store</option>
+                        <option value="Average Store">Average Store</option>
+                    </select>
+                </div>
+
+                <!-- ── TOPUP TYPE ── -->
+                <div class="form-group">
+                    <label style="font-weight:600;">Topup Type</label>
+                    <select name="topup_method" class="form-control">
+                        <option value="">-- Select --</option>
+                        <option value="None">None</option>
+                        <option value="Paypoint">Paypoint</option>
+                        <option value="PayZone">PayZone</option>
+                        <option value="EPay">EPay</option>
+                        <option value="Mpay4u">Mpay4u</option>
+                        <option value="3R Telecom">3R Telecom</option>
+                        <option value="Bliss">Bliss</option>
+                        <option value="Worldpay">Worldpay</option>
+                        <option value="Smartpay">Smartpay</option>
+                        <option value="Decimal Factor (Cash on Mobile)">Decimal Factor (Cash on Mobile)</option>
+                        <option value="Pay Station (Post Office)">Pay Station (Post Office)</option>
+                        <option value="iPay">iPay</option>
+                        <option value="WTU Pay">WTU Pay</option>
+                        <option value="Boss Revolution">Boss Revolution</option>
+                        <option value="Transfer To">Transfer To</option>
+                        <option value="FastTopup FastTel">FastTopup FastTel</option>
+                        <option value="Payment Sense">Payment Sense</option>
+                        <option value="Retail Gateway">Retail Gateway</option>
+                        <option value="Eezee Topup">Eezee Topup</option>
+                        <option value="Physical Vouchers">Physical Vouchers</option>
+                    </select>
+                </div>
+
+                <!-- ── POS ── -->
+                <div class="form-group">
+                    <label style="font-weight:600;">PoS</label>
+                    <div class="checkbox-list">
+                        <label class="checkbox-item"><input type="checkbox" name="pos[]" value="PROJECT_OAK"> PROJECT_OAK</label>
+                        <label class="checkbox-item"><input type="checkbox" name="pos[]" value="C_Top_Terminal_Phase1"> C_Top_Terminal_Phase1</label>
+                        <label class="checkbox-item"><input type="checkbox" name="pos[]" value="SIM_GROWTH_ACC_BUNDLES_2025"> SIM_GROWTH_ACC_BUNDLES_2025</label>
+                        <label class="checkbox-item"><input type="checkbox" name="pos[]" value="SIM_GROWTH_FSDU_BUNDLES_2025"> SIM_GROWTH_FSDU_BUNDLES_2025</label>
+                        <label class="checkbox-item"><input type="checkbox" name="pos[]" value="DEALZ_AUG_25"> DEALZ_AUG_25</label>
+                        <label class="checkbox-item"><input type="checkbox" name="pos[]" value="SIM_GROWTH_FSDU_BUNDLES_OCT_2025"> SIM_GROWTH_FSDU_BUNDLES_OCT_2025</label>
+                        <label class="checkbox-item"><input type="checkbox" name="pos[]" value="NATIONAL_RETAIL_VISITS_2026"> NATIONAL_RETAIL_VISITS_2026</label>
+                        <label class="checkbox-item"><input type="checkbox" name="pos[]" value="CORE_ACCESSORIES_A3_POSTER_APR_2026"> CORE_ACCESSORIES_A3_POSTER_APR_2026</label>
+                        <label class="checkbox-item"><input type="checkbox" name="pos[]" value="48_MOBILE_POSTER_APR_2026"> 48_MOBILE_POSTER_APR_2026</label>
+                        <label class="checkbox-item"><input type="checkbox" name="pos[]" value="IRELAND_SIM_STAND_MAY_2026"> IRELAND_SIM_STAND_MAY_2026</label>
+                        <label class="checkbox-item"><input type="checkbox" name="pos[]" value="TG_JONES_STORE_VISIT_MAY_JUNE_2026"> TG_JONES_STORE_VISIT_MAY_JUNE_2026</label>
+                        <label class="checkbox-item"><input type="checkbox" name="pos[]" value="001_PL_SELF_CHECKOUT_METAL_STAND_ROLLOUT_MAY_2026"> 001_PL_SELF_CHECKOUT_METAL_STAND_ROLLOUT_MAY_2026</label>
+                        <label class="checkbox-item"><input type="checkbox" name="pos[]" value="002_EE_SLEEVES_MAY_JUNE_2026"> 002_EE_SLEEVES_MAY_JUNE_2026</label>
+                        <label class="checkbox-item"><input type="checkbox" name="pos[]" value="PETROL_STATION_ACC_BUNDLES"> PETROL_STATION_ACC_BUNDLES</label>
+                        <label class="checkbox-item"><input type="checkbox" name="pos[]" value="003_EGOTM_ROLL_OUT_JUNE_2026"> 003_EGOTM_ROLL_OUT_JUNE_2026</label>
+                        <label class="checkbox-item"><input type="checkbox" name="pos[]" value="004_VOXI_SIM_STAND_JUNE_2026"> 004_VOXI_SIM_STAND_JUNE_2026</label>
+                        <label class="checkbox-item"><input type="checkbox" name="pos[]" value="005_EE_SIM_STAND_JUNE_2026"> 005_EE_SIM_STAND_JUNE_2026</label>
+                    </div>
+                </div>
+
+                <!-- ── CLASS ── -->
+                <div class="form-group">
+                    <label style="font-weight:600;">Class</label>
+                    <div class="checkbox-list">
+                        <label class="checkbox-item"><input type="checkbox" name="class[]" value="Gift Shop"> Gift Shop</label>
+                        <label class="checkbox-item"><input type="checkbox" name="class[]" value="Supermarket"> Supermarket</label>
+                        <label class="checkbox-item"><input type="checkbox" name="class[]" value="Internet Cafe"> Internet Cafe</label>
+                        <label class="checkbox-item"><input type="checkbox" name="class[]" value="Convenience Store"> Convenience Store</label>
+                        <label class="checkbox-item"><input type="checkbox" name="class[]" value="Newsagent"> Newsagent</label>
+                        <label class="checkbox-item"><input type="checkbox" name="class[]" value="Petrol Station"> Petrol Station</label>
+                        <label class="checkbox-item"><input type="checkbox" name="class[]" value="Off License"> Off License</label>
+                        <label class="checkbox-item"><input type="checkbox" name="class[]" value="Cash and Carry"> Cash and Carry</label>
+                        <label class="checkbox-item"><input type="checkbox" name="class[]" value="Computer Repair"> Computer Repair</label>
+                        <label class="checkbox-item"><input type="checkbox" name="class[]" value="Mobile Phone Store"> Mobile Phone Store</label>
+                        <label class="checkbox-item"><input type="checkbox" name="class[]" value="Restaurant"> Restaurant</label>
+                        <label class="checkbox-item"><input type="checkbox" name="class[]" value="Post Office"> Post Office</label>
+                        <label class="checkbox-item"><input type="checkbox" name="class[]" value="Hardware Store"> Hardware Store</label>
+                        <label class="checkbox-item"><input type="checkbox" name="class[]" value="Discount Store"> Discount Store</label>
+                        <label class="checkbox-item"><input type="checkbox" name="class[]" value="Street and Market Stalls"> Street and Market Stalls</label>
+                        <label class="checkbox-item"><input type="checkbox" name="class[]" value="Unlocking Shop"> Unlocking Shop</label>
+                        <label class="checkbox-item"><input type="checkbox" name="class[]" value="Bulk Store"> Bulk Store</label>
+                        <label class="checkbox-item"><input type="checkbox" name="class[]" value="Butcher"> Butcher</label>
+                        <label class="checkbox-item"><input type="checkbox" name="class[]" value="Hotel"> Hotel</label>
+                        <label class="checkbox-item"><input type="checkbox" name="class[]" value="Kiosks"> Kiosks</label>
+                        <label class="checkbox-item"><input type="checkbox" name="class[]" value="Multi-retail"> Multi-retail</label>
+                        <label class="checkbox-item"><input type="checkbox" name="class[]" value="Tracker"> Tracker</label>
+                        <label class="checkbox-item"><input type="checkbox" name="class[]" value="Petrol Station-Independent"> Petrol Station-Independent</label>
+                        <label class="checkbox-item"><input type="checkbox" name="class[]" value="Petrol Station-Franchise"> Petrol Station-Franchise</label>
+                        <label class="checkbox-item"><input type="checkbox" name="class[]" value="Other"> Other</label>
+                        <label class="checkbox-item"><input type="checkbox" name="class[]" value="NFRN"> NFRN</label>
+                    </div>
+                </div>
+
+                <!-- ── COMPETITION ── -->
+                <div class="form-group">
+                    <label style="font-weight:600;">Competition</label>
+                    <div class="checkbox-list">
+                        <label class="checkbox-item"><input type="checkbox" name="competition[]" value="3R"> 3R</label>
+                        <label class="checkbox-item"><input type="checkbox" name="competition[]" value="Angel"> Angel</label>
+                        <label class="checkbox-item"><input type="checkbox" name="competition[]" value="Ayyapa"> Ayyapa</label>
+                        <label class="checkbox-item"><input type="checkbox" name="competition[]" value="Bookers"> Bookers</label>
+                        <label class="checkbox-item"><input type="checkbox" name="competition[]" value="COMCO"> COMCO</label>
+                        <label class="checkbox-item"><input type="checkbox" name="competition[]" value="Elite"> Elite</label>
+                        <label class="checkbox-item"><input type="checkbox" name="competition[]" value="Get Connected"> Get Connected</label>
+                        <label class="checkbox-item"><input type="checkbox" name="competition[]" value="GK"> GK</label>
+                        <label class="checkbox-item"><input type="checkbox" name="competition[]" value="Leap"> Leap</label>
+                        <label class="checkbox-item"><input type="checkbox" name="competition[]" value="Lebara Direct"> Lebara Direct</label>
+                        <label class="checkbox-item"><input type="checkbox" name="competition[]" value="Lyca Direct"> Lyca Direct</label>
+                        <label class="checkbox-item"><input type="checkbox" name="competition[]" value="Maqbool"> Maqbool</label>
+                        <label class="checkbox-item"><input type="checkbox" name="competition[]" value="Master Comm"> Master Comm</label>
+                        <label class="checkbox-item"><input type="checkbox" name="competition[]" value="None - Core Sole Supply"> None - Core Sole Supply</label>
+                        <label class="checkbox-item"><input type="checkbox" name="competition[]" value="PayPoint"> PayPoint</label>
+                        <label class="checkbox-item"><input type="checkbox" name="competition[]" value="PayZone"> PayZone</label>
+                        <label class="checkbox-item"><input type="checkbox" name="competition[]" value="ReachOn"> ReachOn</label>
+                        <label class="checkbox-item"><input type="checkbox" name="competition[]" value="SKY Top Up &amp; Go"> SKY Top Up &amp; Go</label>
+                        <label class="checkbox-item"><input type="checkbox" name="competition[]" value="Other"> Other</label>
+                    </div>
+                </div>
+
+                <!-- ── PROJECTED MONTHLY SCREEN REPAIRS ── -->
+                <div class="form-group">
+                    <label style="font-weight:600;">Projected Monthly Screen Repairs</label>
+                    <select name="projected_screen_repairs" class="form-control">
+                        <option value="">-- Select --</option>
+                        <option value="1-25">1-25</option>
+                        <option value="26-50">26-50</option>
+                        <option value="51-100">51-100</option>
+                        <option value="101+">101+</option>
+                    </select>
+                </div>
+
+                <!-- ── PROJECTED MONTHLY PAYG SIM SALES ── -->
+                <div class="form-group">
+                    <label style="font-weight:600;">Projected Monthly PAYG SIM Sales</label>
+                    <input type="text" name="projected_payg_sim_sales" placeholder="Projected Monthly PAYG SIM Sales" class="form-control">
+                </div>
+
+                <!-- ── TYPICAL MONTHLY ACCESSORIES PURCHASES ── -->
+                <div class="form-group">
+                    <label style="font-weight:600;">Typical Monthly Accessories Purchases</label>
+                    <select name="typical_accessories_purchases" class="form-control">
+                        <option value="">-- Select --</option>
+                        <option value="£0 - £500">£0 - £500</option>
+                        <option value="£500 - £2000">£500 - £2000</option>
+                        <option value="£2000 - £4000">£2000 - £4000</option>
+                        <option value="£4000+">£4000+</option>
+                    </select>
+                </div>
+
+                <!-- ── AGENT / AREA ── -->
+                <div class="form-group">
+                    <label style="font-weight:600;">Agent</label>
+                    <select name="agent_key" id="agent_key" class="form-control">
+                        <option value="">-- Select Agent --</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label style="font-weight:600;">Area</label>
+                    <select name="area_key" id="area_key" class="form-control">
+                        <option value="">-- Select Area --</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg w-100 mt-3">Create</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<br><br>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
+<script>
+
+    // ── Copy delivery address from shop address ──
+    function copyDeliveryToShop() {
+        document.getElementById('del_business_name').value  = document.getElementById('business_name').value;
+        document.getElementById('del_street_address').value = document.getElementById('street_address').value;
+        document.getElementById('del_town_city').value      = document.getElementById('town_city').value;
+        document.getElementById('del_county').value         = document.getElementById('county').value;
+        document.getElementById('del_eircode').value        = document.getElementById('eircode').value;
+        document.getElementById('del_country').value        = document.getElementById('country').value;
+    }
+
+    // ── Toggle bank fields based on pay method ──
+    function toggleBankFields() {
+        const payMethod = document.getElementById('payMethod').value;
+        const bankFields = document.getElementById('bankTransferFields');
+        if (payMethod === '2') {
+            bankFields.classList.remove('hidden');
+        } else {
+            bankFields.classList.add('hidden');
+        }
+    }
+
+    document.getElementById('payMethod').addEventListener('change', toggleBankFields);
+    toggleBankFields();
+
+    // ── Add / Remove contact blocks ──
+    document.addEventListener('click', function (event) {
+        if (event.target.id === 'add-contact-button') {
+            event.preventDefault();
+
+            const allBlocks = document.querySelectorAll('.contact-form-block');
+            const copyCount = allBlocks.length;
+            const lastBlock = allBlocks[allBlocks.length - 1];
+            const copiedDiv = lastBlock.cloneNode(true);
+
+            // Remove "Add Contact" button from the previous (now non-last) block
+            const prevAddBtn = lastBlock.querySelector('#add-contact-button');
+            if (prevAddBtn) prevAddBtn.closest('.form-group').remove();
+
+            // Clear values and update names in the cloned block
+            copiedDiv.querySelectorAll('input, select').forEach(input => {
+                if (input.name) {
+                    input.name = input.name.replace(/\[\d+\]/, `[${copyCount}]`);
+                }
+                if (input.type === 'checkbox' || input.type === 'radio') {
+                    input.checked = false;
+                } else {
+                    input.value = '';
+                }
+            });
+
+            // Replace Add button in cloned block with Delete button
+            const addBtnGroup = copiedDiv.querySelector('#add-contact-button')?.closest('.form-group');
+            if (addBtnGroup) {
+                addBtnGroup.innerHTML = `
+                    <button type="button" class="delete-contact-button btn btn-sm btn-danger mr-2">Delete Contact</button>
+                    <button type="button" id="add-contact-button" class="btn btn-sm btn-primary">Add Contact</button>
+                `;
+            }
+
+            lastBlock.parentNode.insertBefore(copiedDiv, lastBlock.nextSibling);
+        }
+
+        // Delete contact block
+        if (event.target.classList.contains('delete-contact-button')) {
+            event.target.closest('.contact-form-block').remove();
+
+            // Ensure the last remaining block has an Add button
+            const remainingBlocks = document.querySelectorAll('.contact-form-block');
+            const last = remainingBlocks[remainingBlocks.length - 1];
+            if (last && !last.querySelector('#add-contact-button')) {
+                const addGroup = document.createElement('div');
+                addGroup.className = 'form-group mb-0';
+                addGroup.innerHTML = '<button type="button" id="add-contact-button" class="btn btn-sm btn-primary">Add Contact</button>';
+                last.appendChild(addGroup);
+            }
+        }
+    });
+
+    // ── Auto-uppercase Eircode fields ──
+    ['eircode', 'del_eircode', 'iban'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('input', function () { this.value = this.value.toUpperCase(); });
+    });
+
+</script>
+</body>
+</html>
