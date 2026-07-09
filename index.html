@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Jarvis – Create New Shop (Ireland)</title>
+    <style>
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f0f0f8;color:#333;font-size:15px}
+        nav{background:#41197f;padding:12px 24px;display:flex;align-items:center;gap:10px}
+        nav span{color:#fff;font-size:1.1rem;font-weight:700}
+        .page{max-width:720px;margin:24px auto;padding:0 16px 40px}
+        .page-header{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+        h1{font-size:1.5rem;font-weight:700}
+        .ireland-tag{font-size:0.85rem;color:#7b84ff;font-weight:600}
+        .back-btn{border:1px solid #ccc;background:#fff;color:#555;border-radius:5px;padding:5px 14px;font-size:0.9rem;cursor:pointer;text-decoration:none}
+        .back-btn:hover{background:#f0f0f0;color:#333;text-decoration:none}
+        .card{background:#fff;border-radius:10px;box-shadow:0 1px 8px rgba(0,0,0,.1);padding:24px}
+        .form-group{margin-bottom:14px}
+        .section-label{display:block;font-weight:700;color:#41197f;font-size:0.78rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+        input[type=text],input[type=email],input[type=tel],select{width:100%;padding:9px 12px;border:1px solid #d5d8f0;border-radius:6px;font-size:15px;font-family:inherit;outline:none;background:#fff;transition:border-color .2s;margin-bottom:8px}
+        input[type=text]:last-child,input[type=email]:last-child,input[type=tel]:last-child{margin-bottom:0}
+        input:focus,select:focus{border-color:#7b84ff;box-shadow:0 0 0 3px rgba(123,132,255,.15)}
+        .contact-block{background:#f3f4fd;border:1px solid #bfc4ff;border-radius:8px;padding:16px;margin-bottom:10px}
+        .check-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px}
+        .check-item{display:flex;align-items:center;gap:6px;font-size:14px;cursor:pointer;font-weight:400}
+        .check-item input{width:15px;height:15px;cursor:pointer;accent-color:#7b84ff;flex-shrink:0}
+        .inline-label{font-weight:600;font-size:14px;display:block;margin-bottom:2px}
+        .btn{display:inline-block;padding:9px 18px;border:none;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer;transition:background .2s}
+        .btn-primary{background:#7b84ff;color:#fff}
+        .btn-primary:hover{background:#6770ee}
+        .btn-sm{padding:6px 14px;font-size:13px}
+        .btn-danger{background:#dc3545;color:#fff}
+        .btn-danger:hover{background:#c82333}
+        .btn-copy{background:#7b84ff;color:#fff;margin-bottom:16px}
+        .btn-full{width:100%;padding:12px;font-size:16px;margin-top:8px}
+        .hidden{display:none!important}
+        .divider{border:none;border-top:1px solid #e8e8f0;margin:20px 0}
+    </style>
+</head>
+<body>
+
+<nav>
+    <svg width="28" height="28" viewBox="0 0 40 40"><circle cx="20" cy="20" r="20" fill="#7b84ff"/><text x="10" y="27" font-size="20" fill="white" font-family="sans-serif">J</text></svg>
+    <span>Jarvis</span>
+</nav>
+
+<div class="page">
+    <div class="page-header">
+        <a href="#" class="back-btn">&lt; Back</a>
+        <h1>Create New Shop <span class="ireland-tag">(Ireland)</span></h1>
+    </div>
+
+    <div class="card">
+        <form id="shopForm" novalidate>
+
+            <div class="form-group">
+                <input type="text" name="shop_name" placeholder="Shop Name">
+            </div>
+
+            <hr class="divider">
+
+            <div class="form-group">
+                <span class="section-label">Address</span>
+                <input type="text" id="business_name"  name="business_name"  placeholder="Business Name">
+                <input type="text" id="street_address" name="street_address" placeholder="House Number and Street Name">
+                <input type="text" id="town_city"      name="town_city"      placeholder="Town or City">
+                <input type="text" id="county"         name="county"         placeholder="County">
+                <input type="text" id="eircode"        name="eircode"        placeholder="Eircode" style="text-transform:uppercase">
+                <input type="text" id="country"        name="country"        value="Ireland" readonly style="background:#f5f5ff;color:#666">
+            </div>
+
+            <button type="button" class="btn btn-copy btn-sm" onclick="copyAddress()">Copy Delivery Address</button>
+
+            <div class="form-group">
+                <span class="section-label">Delivery Address</span>
+                <input type="text" id="del_business_name"  name="del_business_name"  placeholder="Business Name">
+                <input type="text" id="del_street_address" name="del_street_address" placeholder="House Number and Street Name">
+                <input type="text" id="del_town_city"      name="del_town_city"      placeholder="Town or City">
+                <input type="text" id="del_county"         name="del_county"         placeholder="County">
+                <input type="text" id="del_eircode"        name="del_eircode"        placeholder="Eircode" style="text-transform:uppercase">
+                <input type="text" id="del_country"        name="del_country"        value="Ireland" readonly style="background:#f5f5ff;color:#666">
+            </div>
+
+            <hr class="divider">
+
+            <div id="contactsContainer">
+                <div class="contact-block" id="contact-0">
+                    <span class="section-label">Contacts</span>
+                    <div class="form-group">
+                        <select name="contacts[0][role]">
+                            <option disabled selected>Role</option>
+                            <option value="Owner">Owner</option>
+                            <option value="Manager">Manager</option>
+                            <option value="Staff">Staff</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="contacts[0][first_name]" placeholder="First Name">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="contacts[0][last_name]" placeholder="Last Name">
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" name="contacts[0][mobile]" placeholder="Phone Number (Mobile)">
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" name="contacts[0][landline]" placeholder="Landline Number">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="contacts[0][email]" placeholder="Email">
+                    </div>
+                    <div class="form-group">
+                        <span class="inline-label">Marketing</span>
+                        <div class="check-row">
+                            <label class="check-item"><input type="checkbox" name="contacts[0][by_email]" value="1"> Email</label>
+                            <label class="check-item"><input type="checkbox" name="contacts[0][by_mail]"  value="1"> Mail</label>
+                            <label class="check-item"><input type="checkbox" name="contacts[0][by_phone]" value="1"> Mobile</label>
+                            <label class="check-item"><input type="checkbox" name="contacts[0][by_sms]"   value="1"> SMS</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <span class="inline-label">Interests</span>
+                        <div class="check-row">
+                            <label class="check-item"><input type="checkbox" name="contacts[0][interests][]" value="Accessories"> Accessories</label>
+                            <label class="check-item"><input type="checkbox" name="contacts[0][interests][]" value="SIMs"> SIMs</label>
+                        </div>
+                    </div>
+                    <div style="margin-top:12px">
+                        <button type="button" class="btn btn-primary btn-sm" onclick="addContact()">Add Contact</button>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <div class="form-group">
+                <span class="section-label">Pay by</span>
+                <select name="pay_method" id="payMethod" onchange="toggleBank()">
+                    <option value="Cheque">Cheque</option>
+                    <option value="Bank Transfer" selected>Bank Transfer</option>
+                    <option value="None">None</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <input type="text" name="payee" placeholder="Payee">
+            </div>
+
+            <div id="bankFields">
+                <span class="section-label">Bank Details</span>
+                <div class="form-group">
+                    <input type="text" name="bic" id="bic" placeholder="SWIFT / BIC" style="text-transform:uppercase">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="iban" id="iban" placeholder="IBAN" style="text-transform:uppercase">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="bank_address" placeholder="Bank Address">
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <div class="form-group">
+                <input type="text" name="vatin" placeholder="VAT ID">
+            </div>
+
+            <div class="form-group">
+                <input type="text" name="agent" placeholder="Agent">
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full">Create</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    var AIRTABLE_TOKEN    = 'patiwkLBEHfFYQOf7.f5a469142f34c12c6dbbb0b9ebc74e71a9f3c3a1f76b134dbbe2ed410ba9c9c4';
+    var AIRTABLE_BASE_ID  = 'appwqv2pE9DNeXT1j';
+    var AIRTABLE_TABLE_ID = 'tbl3RJUHP9fdJrFHa';
+
+    function copyAddress() {
+        ['business_name','street_address','town_city','county','eircode'].forEach(function(f) {
+            document.getElementById('del_' + f).value = document.getElementById(f).value;
+        });
+    }
+
+    function toggleBank() {
+        var method = document.getElementById('payMethod').value;
+        document.getElementById('bankFields').classList.toggle('hidden', method !== 'Bank Transfer');
+    }
+    toggleBank();
+
+    ['eircode','del_eircode','bic','iban'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) el.addEventListener('input', function(){ this.value = this.value.toUpperCase(); });
+    });
+
+    var contactCount = 1;
+    function addContact() {
+        var idx = contactCount++;
+        var block = document.createElement('div');
+        block.className = 'contact-block';
+        block.id = 'contact-' + idx;
+        block.innerHTML =
+            '<span class="section-label">Contact ' + (idx + 1) + '</span>'
+            + '<div class="form-group"><select name="contacts['+idx+'][role]"><option disabled selected>Role</option><option value="Owner">Owner</option><option value="Manager">Manager</option><option value="Staff">Staff</option></select></div>'
+            + '<div class="form-group"><input type="text"  name="contacts['+idx+'][first_name]" placeholder="First Name"></div>'
+            + '<div class="form-group"><input type="text"  name="contacts['+idx+'][last_name]"  placeholder="Last Name"></div>'
+            + '<div class="form-group"><input type="tel"   name="contacts['+idx+'][mobile]"     placeholder="Phone Number (Mobile)"></div>'
+            + '<div class="form-group"><input type="tel"   name="contacts['+idx+'][landline]"   placeholder="Landline Number"></div>'
+            + '<div class="form-group"><input type="email" name="contacts['+idx+'][email]"      placeholder="Email"></div>'
+            + '<div class="form-group"><span class="inline-label">Marketing</span><div class="check-row">'
+            + '<label class="check-item"><input type="checkbox" name="contacts['+idx+'][by_email]" value="1"> Email</label>'
+            + '<label class="check-item"><input type="checkbox" name="contacts['+idx+'][by_mail]"  value="1"> Mail</label>'
+            + '<label class="check-item"><input type="checkbox" name="contacts['+idx+'][by_phone]" value="1"> Mobile</label>'
+            + '<label class="check-item"><input type="checkbox" name="contacts['+idx+'][by_sms]"   value="1"> SMS</label>'
+            + '</div></div>'
+            + '<div class="form-group"><span class="inline-label">Interests</span><div class="check-row">'
+            + '<label class="check-item"><input type="checkbox" name="contacts['+idx+'][interests][]" value="Accessories"> Accessories</label>'
+            + '<label class="check-item"><input type="checkbox" name="contacts['+idx+'][interests][]" value="SIMs"> SIMs</label>'
+            + '</div></div>'
+            + '<div style="margin-top:12px"><button type="button" class="btn btn-danger btn-sm" onclick="removeContact('+idx+')">Remove Contact</button></div>';
+        document.getElementById('contactsContainer').appendChild(block);
+    }
+
+    function removeContact(idx) {
+        var el = document.getElementById('contact-' + idx);
+        if (el) el.remove();
+    }
+
+    function collectContacts() {
+        var blocks = document.querySelectorAll('.contact-block');
+        var lines = [];
+        blocks.forEach(function(block, i) {
+            var get = function(name) {
+                var el = block.querySelector('[name*="['+name+']"]');
+                return el ? el.value : '';
+            };
+            var marketing = [];
+            if (block.querySelector('[name*="[by_email]"]:checked')) marketing.push('Email');
+            if (block.querySelector('[name*="[by_mail]"]:checked'))  marketing.push('Mail');
+            if (block.querySelector('[name*="[by_phone]"]:checked')) marketing.push('Mobile');
+            if (block.querySelector('[name*="[by_sms]"]:checked'))   marketing.push('SMS');
+            var interests = Array.from(block.querySelectorAll('[name*="[interests]"]:checked')).map(function(e){ return e.value; }).join(', ');
+            var role = block.querySelector('select') ? block.querySelector('select').value : '';
+            lines.push(
+                'Contact ' + (i+1) + ': ' + role +
+                ' | ' + get('first_name') + ' ' + get('last_name') +
+                ' | Mobile: ' + get('mobile') +
+                ' | Landline: ' + get('landline') +
+                ' | Email: ' + get('email') +
+                ' | Marketing: ' + marketing.join(', ') +
+                ' | Interests: ' + interests
+            );
+        });
+        return lines.join('\n');
+    }
+
+    function getFirstContact(field) {
+        var block = document.querySelector('.contact-block');
+        if (!block) return '';
+        if (field === 'role') {
+            var sel = block.querySelector('select');
+            return sel ? sel.value : '';
+        }
+        var el = block.querySelector('[name*="['+field+']"]');
+        return el ? el.value : '';
+    }
+
+    function getFirstMarketing() {
+        var block = document.querySelector('.contact-block');
+        if (!block) return '';
+        var marketing = [];
+        if (block.querySelector('[name*="[by_email]"]:checked')) marketing.push('Email');
+        if (block.querySelector('[name*="[by_mail]"]:checked'))  marketing.push('Mail');
+        if (block.querySelector('[name*="[by_phone]"]:checked')) marketing.push('Mobile');
+        if (block.querySelector('[name*="[by_sms]"]:checked'))   marketing.push('SMS');
+        return marketing.join(', ');
+    }
+
+    function getFirstInterests() {
+        var block = document.querySelector('.contact-block');
+        if (!block) return '';
+        return Array.from(block.querySelectorAll('[name*="[interests]"]:checked')).map(function(e){ return e.value; }).join(', ');
+    }
+
+    document.getElementById('shopForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        var f = this;
+        var g = function(name) { var el = f.querySelector('[name="'+name+'"]'); return el ? el.value : ''; };
+
+        var fields = {
+            'Shop Name':          g('shop_name'),
+            'Business Name':      g('business_name'),
+            'Street Address':     g('street_address'),
+            'Town or City':       g('town_city'),
+            'County':             g('county'),
+            'Eircode':            g('eircode'),
+            'Country':            'Ireland',
+            'Del Business Name':  g('del_business_name'),
+            'Del Street Address': g('del_street_address'),
+            'Del Town or City':   g('del_town_city'),
+            'Del County':         g('del_county'),
+            'Del Eircode':        g('del_eircode'),
+            'Del Country':        'Ireland',
+            'Contacts':           collectContacts(),
+            'Contact Role':       getFirstContact('role'),
+            'Contact First Name': getFirstContact('first_name'),
+            'Contact Last Name':  getFirstContact('last_name'),
+            'Contact Mobile':     getFirstContact('mobile'),
+            'Contact Landline':   getFirstContact('landline'),
+            'Contact Email':      getFirstContact('email'),
+            'Marketing':          getFirstMarketing(),
+            'Interests':          getFirstInterests(),
+            'Pay Method':         g('pay_method'),
+            'Payee':              g('payee'),
+            'SWIFT / BIC':        g('bic'),
+            'IBAN':               g('iban'),
+            'Bank Address':       g('bank_address'),
+            'VAT ID':             g('vatin'),
+            'Agent':              g('agent')
+        };
+
+        var submitBtn = f.querySelector('button[type="submit"]');
+        submitBtn.textContent = 'Saving...';
+        submitBtn.disabled = true;
+
+        fetch('https://api.airtable.com/v0/' + AIRTABLE_BASE_ID + '/' + AIRTABLE_TABLE_ID, {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + AIRTABLE_TOKEN,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ fields: fields })
+        })
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+            if (data.id) {
+                submitBtn.textContent = '✓ Saved to Airtable!';
+                submitBtn.style.background = '#28a745';
+                f.reset();
+                document.getElementById('del_country').value = 'Ireland';
+                document.getElementById('country').value = 'Ireland';
+                toggleBank();
+                setTimeout(function() {
+                    submitBtn.textContent = 'Create';
+                    submitBtn.style.background = '';
+                    submitBtn.disabled = false;
+                }, 3000);
+            } else {
+                throw new Error(JSON.stringify(data));
+            }
+        })
+        .catch(function(err) {
+            console.error(err);
+            submitBtn.textContent = '✗ Error — check console';
+            submitBtn.style.background = '#dc3545';
+            submitBtn.disabled = false;
+        });
+    });
+</script>
+</body>
+</html>
