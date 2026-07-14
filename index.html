@@ -86,7 +86,7 @@
 
             <div id="contactsContainer">
                 <div class="contact-block" id="contact-0">
-                    <span class="section-label">Contacts</span>
+                    <span class="section-label">Contact details</span>
                     <div class="form-group">
                         <select name="contacts[0][role]">
                             <option disabled selected>Role</option>
@@ -109,22 +109,6 @@
                     </div>
                     <div class="form-group">
                         <input type="email" name="contacts[0][email]" placeholder="Email">
-                    </div>
-                    <div class="form-group">
-                        <span class="inline-label">Marketing</span>
-                        <div class="check-row">
-                            <label class="check-item"><input type="checkbox" name="contacts[0][by_email]" value="1"> Email</label>
-                            <label class="check-item"><input type="checkbox" name="contacts[0][by_mail]"  value="1"> Mail</label>
-                            <label class="check-item"><input type="checkbox" name="contacts[0][by_phone]" value="1"> Mobile</label>
-                            <label class="check-item"><input type="checkbox" name="contacts[0][by_sms]"   value="1"> SMS</label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <span class="inline-label">Interests</span>
-                        <div class="check-row">
-                            <label class="check-item"><input type="checkbox" name="contacts[0][interests][]" value="Accessories"> Accessories</label>
-                            <label class="check-item"><input type="checkbox" name="contacts[0][interests][]" value="SIMs"> SIMs</label>
-                        </div>
                     </div>
                     <div style="margin-top:12px">
                         <button type="button" class="btn btn-primary btn-sm" onclick="addContact()">Add Contact</button>
@@ -211,16 +195,6 @@
             + '<div class="form-group"><input type="tel"   name="contacts['+idx+'][mobile]"     placeholder="Phone Number (Mobile)"></div>'
             + '<div class="form-group"><input type="tel"   name="contacts['+idx+'][landline]"   placeholder="Landline Number"></div>'
             + '<div class="form-group"><input type="email" name="contacts['+idx+'][email]"      placeholder="Email"></div>'
-            + '<div class="form-group"><span class="inline-label">Marketing</span><div class="check-row">'
-            + '<label class="check-item"><input type="checkbox" name="contacts['+idx+'][by_email]" value="1"> Email</label>'
-            + '<label class="check-item"><input type="checkbox" name="contacts['+idx+'][by_mail]"  value="1"> Mail</label>'
-            + '<label class="check-item"><input type="checkbox" name="contacts['+idx+'][by_phone]" value="1"> Mobile</label>'
-            + '<label class="check-item"><input type="checkbox" name="contacts['+idx+'][by_sms]"   value="1"> SMS</label>'
-            + '</div></div>'
-            + '<div class="form-group"><span class="inline-label">Interests</span><div class="check-row">'
-            + '<label class="check-item"><input type="checkbox" name="contacts['+idx+'][interests][]" value="Accessories"> Accessories</label>'
-            + '<label class="check-item"><input type="checkbox" name="contacts['+idx+'][interests][]" value="SIMs"> SIMs</label>'
-            + '</div></div>'
             + '<div style="margin-top:12px"><button type="button" class="btn btn-danger btn-sm" onclick="removeContact('+idx+')">Remove Contact</button></div>';
         document.getElementById('contactsContainer').appendChild(block);
     }
@@ -238,21 +212,13 @@
                 var el = block.querySelector('[name*="['+name+']"]');
                 return el ? el.value : '';
             };
-            var marketing = [];
-            if (block.querySelector('[name*="[by_email]"]:checked')) marketing.push('Email');
-            if (block.querySelector('[name*="[by_mail]"]:checked'))  marketing.push('Mail');
-            if (block.querySelector('[name*="[by_phone]"]:checked')) marketing.push('Mobile');
-            if (block.querySelector('[name*="[by_sms]"]:checked'))   marketing.push('SMS');
-            var interests = Array.from(block.querySelectorAll('[name*="[interests]"]:checked')).map(function(e){ return e.value; }).join(', ');
             var role = block.querySelector('select') ? block.querySelector('select').value : '';
             lines.push(
                 'Contact ' + (i+1) + ': ' + role +
                 ' | ' + get('first_name') + ' ' + get('last_name') +
                 ' | Mobile: ' + get('mobile') +
                 ' | Landline: ' + get('landline') +
-                ' | Email: ' + get('email') +
-                ' | Marketing: ' + marketing.join(', ') +
-                ' | Interests: ' + interests
+                ' | Email: ' + get('email')
             );
         });
         return lines.join('\n');
@@ -267,23 +233,6 @@
         }
         var el = block.querySelector('[name*="['+field+']"]');
         return el ? el.value : '';
-    }
-
-    function getFirstMarketing() {
-        var block = document.querySelector('.contact-block');
-        if (!block) return '';
-        var marketing = [];
-        if (block.querySelector('[name*="[by_email]"]:checked')) marketing.push('Email');
-        if (block.querySelector('[name*="[by_mail]"]:checked'))  marketing.push('Mail');
-        if (block.querySelector('[name*="[by_phone]"]:checked')) marketing.push('Mobile');
-        if (block.querySelector('[name*="[by_sms]"]:checked'))   marketing.push('SMS');
-        return marketing.join(', ');
-    }
-
-    function getFirstInterests() {
-        var block = document.querySelector('.contact-block');
-        if (!block) return '';
-        return Array.from(block.querySelectorAll('[name*="[interests]"]:checked')).map(function(e){ return e.value; }).join(', ');
     }
 
     document.getElementById('shopForm').addEventListener('submit', function(e) {
@@ -313,8 +262,6 @@
             'Contact Mobile':     getFirstContact('mobile'),
             'Contact Landline':   getFirstContact('landline'),
             'Contact Email':      getFirstContact('email'),
-            'Marketing':          getFirstMarketing(),
-            'Interests':          getFirstInterests(),
             'Pay Method':         g('pay_method'),
             'Payee':              g('payee'),
             'SWIFT / BIC':        g('bic'),
