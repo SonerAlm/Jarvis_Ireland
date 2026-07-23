@@ -32,6 +32,7 @@
         .card{background:#fff;padding:0}
         .form-group{margin-bottom:14px}
         .section-label{display:block;font-weight:600;color:#2b2b2b;font-size:1.05rem;margin-bottom:12px}
+        .static-value{padding:9px 0;font-size:15px;color:var(--text)}
         input[type=text],input[type=email],input[type=tel],select{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:4px;font-size:15px;font-family:inherit;outline:none;background:#fff;transition:border-color .2s;margin-bottom:8px}
         input[type=text]:last-child,input[type=email]:last-child,input[type=tel]:last-child{margin-bottom:0}
         input:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(63,136,197,.15)}
@@ -143,10 +144,8 @@
 
             <div class="form-group">
                 <span class="section-label">Pay by</span>
-                <select name="pay_method" id="payMethod" onchange="toggleBank()">
-                    <option value="Bank Transfer" selected>Bank Transfer</option>
-                    <option value="None">None</option>
-                </select>
+                <div class="static-value">Bank Transfer</div>
+                <input type="hidden" name="pay_method" value="Bank Transfer">
             </div>
 
             <div class="form-group">
@@ -191,12 +190,6 @@
             document.getElementById('del_' + f).value = document.getElementById(f).value;
         });
     }
-
-    function toggleBank() {
-        var method = document.getElementById('payMethod').value;
-        document.getElementById('bankFields').classList.toggle('hidden', method !== 'Bank Transfer');
-    }
-    toggleBank();
 
     ['eircode','del_eircode','bic','iban'].forEach(function(id) {
         var el = document.getElementById(id);
@@ -313,7 +306,6 @@
                 f.reset();
                 document.getElementById('del_country').value = 'Ireland';
                 document.getElementById('country').value = 'Ireland';
-                toggleBank();
                 setTimeout(function() {
                     submitBtn.textContent = 'Create';
                     submitBtn.style.background = '';
